@@ -1,0 +1,22 @@
+// game loop
+while (true) {
+// Read input values for x, y, next checkpoint x, and next checkpoint y
+var inputs = readline().split(' ');
+const x = parseInt(inputs[0]); // x position of your pod
+const y = parseInt(inputs[1]); // y position of your pod
+const nextCheckpointX = parseInt(inputs[2]); // x position of the next check point
+const nextCheckpointY = parseInt(inputs[3]); // y position of the next check point
+
+// Calculate the angle to the next checkpoint
+const angle = Math.atan2(nextCheckpointY - y, nextCheckpointX - x) * 180 / Math.PI;
+
+// Set the target position as the next checkpoint
+const targetX = nextCheckpointX;
+const targetY = nextCheckpointY;
+
+// Set the thrust to the maximum (100)
+const thrust = 100;
+
+// Output the target position and thrust
+console.log(targetX + ' ' + targetY + ' ' + thrust);
+}
