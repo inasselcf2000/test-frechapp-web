@@ -1,22 +1,40 @@
 // game loop
 while (true) {
-// Read input values for x, y, next checkpoint x, and next checkpoint y
-var inputs = readline().split(' ');
-const x = parseInt(inputs[0]); // x position of your pod
-const y = parseInt(inputs[1]); // y position of your pod
-const nextCheckpointX = parseInt(inputs[2]); // x position of the next check point
-const nextCheckpointY = parseInt(inputs[3]); // y position of the next check point
+    var inputs = readline().split(' ');
+    const x = parseInt(inputs[0]);
+    const y = parseInt(inputs[1]);
+    const nextCheckpointX = parseInt(inputs[2]); // x position of the next check point
+    const nextCheckpointY = parseInt(inputs[3]); // y position of the next check point
+    const nextCheckpointDist = parseInt(inputs[4]); // distance to the next checkpoint
+    const nextCheckpointAngle = parseInt(inputs[5]); // angle between your pod orientation and the direction of the next checkpoint
+    var inputs = readline().split(' ');
+    const opponentX = parseInt(inputs[0]);
+    const opponentY = parseInt(inputs[1]);
 
-// Calculate the angle to the next checkpoint
-const angle = Math.atan2(nextCheckpointY - y, nextCheckpointX - x) * 180 / Math.PI;
+    // Calculate the angle between the pod and the next checkpoint
+    const angle = Math.atan2(nextCheckpointY - y, nextCheckpointX - x) * 180 / Math.PI;
 
-// Set the target position as the next checkpoint
-const targetX = nextCheckpointX;
-const targetY = nextCheckpointY;
+    // Calculate the optimal power for the thrusters
+    const thrust = getThrust(nextCheckpointDist);
 
-// Set the thrust to the maximum (100)
-const thrust = 100;
+    // Output the target position and the optimal thruster power
+    console.log(`${nextCheckpointX} ${nextCheckpointY} ${thrust} ${angle}`);
 
-// Output the target position and thrust
-console.log(targetX + ' ' + targetY + ' ' + thrust);
+    // Debug messages
+    console.error(`x: ${x}, y: ${y}, dist: ${nextCheckpointDist}, angle: ${angle}, thrust: ${thrust}`);
+}
+
+// Function to determine the optimal thruster power based on the distance to the next checkpoint
+function getThrust(dist) {
+    if (dist > 4000) {
+        return 100;
+    } else if (dist > 2000) {
+        return 70;
+    } else if (dist > 1000) {
+        return 50;
+    } else if (dist > 500) {
+        return 30;
+    } else {
+        return 10;
+    }
 }
